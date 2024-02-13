@@ -1,0 +1,73 @@
+MOTIVO,TRANSACCIÓN (NIVEL 1),DETALLE (NIVEL 2),HIGEA - NIVEL 3
+AUTORIZACIONES,SOLICITUD  y Consulta de Autorizaciones,Autorización de servicios médicos mayor de 60 años,
+,,Autorización de medicamentos  mayor de 60 años,
+,,Demora Autorización / Conector Caso 30 min,
+,,Incidencia en Autorización / No prioritario,
+,,Incidencia en Autorización / Respuesta inmediata,
+,,Renovación de Autorización,
+,,Soolicitud de autorización  (Menores de 60 años),Soolicitud de autorización prestaciones (Servicios Médicos)
+,,,Solicitud de autorización medicamentos
+,,Consulta de autorizaciones    (Menores de 60 años),Consulta de autorizaciones - Prestaciones
+,,,Consulta de autorizaciones - Medicamentos
+,CONSUMO DE MEDICAMENTOS,Servicos Médicos,Incidencia en Autorización de Medicamentos
+,,,Información Post egreso hospitalario y Urgencias (medicamentos)
+,,Novedades con Cruz Verde,Medicamentos agotados o descontinuados
+,,,Medicamentos no entregados
+ACOMPAÑAMIENTO CANAL VIRTUAL, ZONA PÚBLICA,CONSULTAS Y TRANSACCIONES,PORTAL 
+,,,APP
+,,,CHATBOT - MARÍA PAULA.
+,ZONA PRIVADA,CONSULTAS Y TRANSACCIONES,PORTAL 
+,,,APP
+,,,CHATBOT - MARÍA PAULA.
+ACUTULIZACIÓN DE DATOS DE CONTACTO - BH,ACTUALIZACIÓN DE DATOS PERSONALES,Actualización de datos de contacto,
+CERTIFICADOS,CERTIFICADO PARA EFECTOS TRIBUTARIOS,Generación y-o envío de certificado de retefuente y pagos,
+,,Trámite en Línea MP - Radicación de Conector,
+,GENERACIÓN DE CERTIFICADO DE SEGURO DE VIAJE (CONSULAR-MIGRATORIO),Envío Certificado Cobertura Internacional ,
+CONSULTAS,CONSULTA DE FACTURA  (Consulta y/o Envío),Generación y-o envío factura,
+,HISTORIAL DE PAGOS,"consulta pago cuota
+OV pago en línea - PSE",
+,RESULTADO DE LA ÚLTIMA TRANSACCIÓN (Pago de factura realizada en el canal Ma. Paula),"transacción en zona de pagos no registra
+transacción en zona de pagos pendiente",
+,NOVEDADES DE CARTERA,ACOMPAÑAMIENTO PARA RADICACIÓN Y CONSULTA DE NOVEDADES DE CARTERA (PORTAL DE USUARIOS DE MP),Valores Facturados.
+,,,Inscripción de cuenta bancaria para pago (Débito Bancario).
+,,, Inconsistencias en el pago.
+,,,Cambiar periodicidad de facturación.
+,,,Radicación de Conector por Novedades de Cartera
+,,Liquidador (Pago Anticipado),Consultas y Novedades de Pago Anticipado
+,CONSULTA DE MIS PLANES ,Solicitud de Inclusiones o Nuevas Afiliaciones,Envío de información al formulario de Gcia. Comercial (SalesForce)
+,,Novedades al contrato,Solicitud de Cancelaciones 
+,,,Certiificados de antiguedad
+,,,Certificados de Preexistencias
+,,,Certificado de Utilizaciones
+,,,RADICACIÓN DE CONECTOR 
+CITAS MÉDICA BANREP,"CITAS (INCLUYE CONSULTA EXTERNA CON TODAS SUS ESPECIALIDADES, ODONTOLOGÍA OPTOMETRÍA, IMÁGENES Dx Y Px Dx) 
+
+BANREP",Médico Puerta de Entrada,Asig. y-o confir. Cita Puerta de Entrada
+,,,Canc. y-o traslado cita  Médico Puerta de Entrada
+,,,Canc. y-o traslado cita  Odontólogo Puerta de Entrada
+,,Preagendamiento,Asig. y-o confir. Cita especialista (preagendamiento)
+,,,Canc. y-o traslado cita especialista (preagendamiento)
+,,Canc. y-o traslado cita Puerta de Entrada,Médico Puerta de Entrada
+,,,Odontólogo Puerta de Entrada
+VALES ELECTRÓNICOS,CONSULTA VALES (DISPONIBLES Y CONSUMIDOS),Compra De Vales - Consulta en Pasarela de Pagos (Paymentez),Consulta de Transacciones -  Datáfono Colsanitas
+,,,Consulta de Transacciones - Datáfono Medisanitas
+,,,Consulta de transacciones - Corresponsal bancario Colsanitas
+,,,Consulta de transacciones - Corresponsal bancario Medisnaitas
+,,Consulta de Vales - MFT de Recaudo,Vales Consumidos
+,,,Vales Habilitados
+,,,Vale comprado para otro contrato
+,,,Consulta de Prestador que Redimió el Vale
+,,Incidencia Vales Electrónicos,Demora en la asignación - Transacción Pendiente en  la Pasarela de Pagos
+,,,Demora en la asignación - Aprobada en Pasarela pero no en Replicador Tecnología Keralty
+,,,Demora en la asignación - Incidencia en Transacciones Pasarela ACH  / TDC
+,,,No registra Vale
+,,,Radicación de Conector a  Recaudo
+RESULTADOS MÉDICOS,CONSULTA DE IMÁGENES DIAGNÓSTICAS,Consulta de resultados de imágenes diagnósticas  ,
+,,Envío de resultados de imágenes díagnosticas por novedad de la OFV (Por Excepción),
+,CONSULTA DE RESULTADOS DE LABORATORIO,Consulta de resultados de  laboratorios,
+,,Envío de resultados de laboratorios por novedad de la OFV  (Por Excepción),
+DIRECTORIOS,DIRECTORIO DE OFICINAS,Información Directorio de Oficinas,
+,DIRECTORIO MÉDICO,Información Directorio Médico,
+,,Reporte de  Novedades de  Directorio Médico,
+SEGURO DE VIAJE,ACTIVACIÓN DE SEGURO DE VIAJE,Activación  WTA,
+,CONSULTA DE ACTIVACIÓN DE SEGURO DE VIAJE,CONSULTA WTA,

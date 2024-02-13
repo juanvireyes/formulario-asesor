@@ -1,0 +1,165 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --colsanitas-dark-blue: #1a237e;
+  --colsanitas-withe: #f5f5f5;
+  --colsanitas-red-error: #b50303;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+.hide {
+  display: none;
+}
+
+/* Estilo header encabezado */
+.wv-header {
+  width: 100%;
+  height: 80px;
+  background-color: var(--colsanitas-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.header-img-cont {
+  height: 60px;
+}
+
+.header-img {
+  height: 100%;
+}
+
+/*Estilos botón hide*/
+.hide-cont {
+  display: flex;
+  background-color: var(--colsanitas-dark-blue);
+  margin: 0 0 8px 0;
+  padding: 0 0 0 8px;
+}
+
+.hide-cont h1 {
+  text-align: center;
+  width: 100%;
+  color: var(--colsanitas-withe);
+  padding: 5px 0;
+}
+
+.hide-cont img {
+  cursor: pointer;
+}
+
+/*Estilo contenedor principal*/
+.container,
+.user,
+.aut,
+.tipification-section {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.user,
+.aut {
+  padding: 10px 10px;
+}
+
+.tipification-cont {
+  padding: 4px 0;
+}
+
+.user-form-cont {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.user-form {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.id-type-cont,
+.id-number-cont {
+  display: flex;
+  gap: 10px;
+}
+
+/* Estilos resultados data usuario */
+.data-result {
+  margin: 10px;
+}
+
+.data-result div {
+  display: flex;
+  gap: 6px;
+}
+
+.name-label,
+.tipo-doc-label,
+.num-doc-label,
+.edad-label,
+.telefono-label,
+.correo-label,
+.contrato-label,
+.plan-label,
+.telefono-form-label,
+.email-form-label,
+.fecha-label,
+.skill-label,
+.contratos-eps-label,
+.contratos-familia-label,
+.id-conversacion-label {
+  font-weight: 700;
+}
+
+/* Estilos base tabla autorizaciones */
+.authorizations-table {
+  border-spacing: 10px;
+}
+
+/*Estilos formulario tipificación*/
+.tip-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.add-row-btn {
+  height: 32px;
+  position: relative;
+  left: 5px;
+  bottom: 4px;
+}
+
+.add-row-btn img {
+  height: 100%;
+  cursor: pointer;
+}
+
+.delete-btn-cont {
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-btn-cont button {
+  border: none;
+  width: 100%;
+  font-size: 20px;
+  background-color: var(--colsanitas-withe);
+  color: var(--colsanitas-red-error);
+  cursor: pointer;
+}

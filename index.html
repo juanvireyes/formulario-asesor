@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <header class="wv-header">
+        <figure class="header-img-cont">
+          <img
+            src="./assets/logo.png"
+            alt="Logo Colsanitas"
+            class="header-img"
+          />
+        </figure>
+      </header>
+
+      <div class="hide-cont" id="hide-user">
+        <img
+          src="./assets/downArrow.svg"
+          alt="Desplegar sección"
+          class="hide-section"
+        />
+        <h1>Metada</h1>
+      </div>
+      <div id="user-data" class="user">
+        <div class="user-form-cont" id="user-form-cont">
+          <form class="user-form" id="user-form">
+            <div class="id-type-cont">
+              <label for="id-type">Seleccione el tipo de documento</label>
+              <select name="id-type" id="id-type"></select>
+
+              <label for="id-number">
+                Ingrese el número de documento
+                <input
+                  type="text"
+                  minlength="4"
+                  pattern="[a-zA-Z0-9]+"
+                  id="doc-num"
+                  name="doc-num"
+                  required
+                />
+              </label>
+              <button type="submit">Buscar usuario - Nueva atención</button>
+            </div>
+            <button
+              type="button"
+              id="reset-form"
+              name="reset-form"
+              class="reset-form"
+            >
+              Limpiar formulario
+            </button>
+          </form>
+        </div>
+        <div class="data-result hide" id="data-result"></div>
+      </div>
+
+      <div class="hide-cont" id="hide-auth">
+        <img
+          src="./assets/downArrow.svg"
+          alt="Desplegar sección"
+          class="hide-section"
+        />
+        <h1>Últimas autorizaciones</h1>
+      </div>
+      <div id="authorization-data" class="aut hide"></div>
+
+      <div class="hide-cont" id="hide-tipification">
+        <img
+          src="./assets/downArrow.svg"
+          alt="Desplegar sección"
+          class="hide-section"
+        />
+        <h1>Tipificaciones</h1>
+      </div>
+      <div id="tipification-section" class="tipification-section hide">
+        <form class="tipification-form" id="form-tipification">
+          <!-- Contenedor selectores tipificación -->
+          <div class="tipification-cont" id="tipification-cont">
+            <!-- Tipificación 1 -->
+            <div class="tip-form tip-form-1">
+              <label for="reason-1">
+                Motivo:
+                <select name="reason-1" id="reason-1" required></select>
+              </label>
+
+              <label for="reason-1-level-1">
+                Nivel 1
+                <select
+                  name="reason-1-level-1"
+                  id="reason-1-level-1"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-1-level-2">
+                Nivel 2
+                <select
+                  name="reason-1-level-2"
+                  id="reason-1-level-2"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-1-level3">
+                Nivel 3
+                <select name="reason-1-level3" id="reason-1-level-3"></select>
+              </label>
+
+              <div class="delete-btn-cont">
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="add-row-btn" id="add-row-btn">
+            <img src="./assets/add-circle.svg" alt="Agregar fila" />
+          </div>
+
+          <div
+            class="observations-cont"
+            style="
+              display: flex;
+              flex-direction: column;
+              padding: 10px;
+              margin: 15px;
+            "
+          >
+            <label for="observaciones" class="observaciones-label">
+              Observaciones
+            </label>
+            <textarea
+              name="observations"
+              id="observations"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+
+          <div class="btns-container">
+            <button type="button" id="reset-form" name="reset">
+              Limpiar formulario
+            </button>
+            <button type="submit" id="register-tipification" name="register">
+              Registrar tipificación
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
+
+<!-- Tpificación 2 -->
+<!-- <div class="tip-form tip-form2">
+              <label for="reason-2">
+                Motivo:
+                <select name="reason-2" id="reason-2" required></select>
+              </label>
+
+              <label for="reason-2-level-1">
+                Nivel 1
+                <select
+                  name="reason-2-level-1"
+                  id="reason-2-level-1"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-2-level-2">
+                Nivel 2
+                <select
+                  name="reason-2-level-2"
+                  id="reason-2-level-2"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-2-level-3">
+                Nivel 3
+                <select name="reason-2-level-3" id="reason-2-level-3"></select>
+              </label>
+            </div> -->
+
+<!-- Tipificaión 3 -->
+<!-- <div class="tip-form tip-form3">
+              <label for="reason-3">
+                Motivo:
+                <select name="reason-3" id="reason-3" required></select>
+              </label>
+
+              <label for="reason-3-level-1">
+                Nivel 1
+                <select
+                  name="reason-3-level-1"
+                  id="reason-3-level-1"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-3-level-2">
+                Nivel 2
+                <select
+                  name="reason-3-level-2"
+                  id="reason-3-level-2"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-3-level-3">
+                Nivel 3
+                <select name="reason-3-level-3" id="reason-3-level-3"></select>
+              </label>
+            </div> -->
+
+<!-- Tipificación 4 -->
+<!-- <div class="tip-form tip-form4">
+              <label for="reason-4">
+                Motivo:
+                <select name="reason-4" id="reason-4" required></select>
+              </label>
+
+              <label for="reason-4-level-1">
+                Nivel 1
+                <select
+                  name="reason-4-level-1"
+                  id="reason-4-level-1"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-4-level-2">
+                Nivel 2
+                <select
+                  name="reason-4-level-2"
+                  id="reason-4-level-2"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-4-level-3">
+                Nivel 3
+                <select name="reason-4-level-3" id="reason-4-level-3"></select>
+              </label>
+            </div> -->
+
+<!-- Tipificación 5 -->
+<!-- <div class="tip-form tip-form5">
+              <label for="reason-5">
+                Motivo:
+                <select name="reason-5" id="reason-5" required></select>
+              </label>
+
+              <label for="reason-5-level-1">
+                Nivel 1
+                <select
+                  name="reason-5-level-1"
+                  id="reason-5-level-1"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-5-level-2">
+                Nivel 2
+                <select
+                  name="reason-5-level-2"
+                  id="reason-5-level-2"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-5-level-3">
+                Nivel 3
+                <select name="reason-5-level-3" id="reason-5-level-3"></select>
+              </label>
+            </div> -->
