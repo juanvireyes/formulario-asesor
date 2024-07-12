@@ -65,8 +65,8 @@ body {
 .user,
 .aut,
 .tipification-section {
-  width: 100%;
-  margin-bottom: 4px;
+  width: 100% !important;
+  margin-bottom: 4px !important;
 }
 
 .user,
@@ -93,7 +93,7 @@ body {
 .id-type-cont,
 .id-number-cont {
   display: flex;
-  gap: 10px;
+  gap: 30px;
 }
 
 /* Estilos resultados data usuario */
@@ -136,6 +136,10 @@ body {
   margin-bottom: 10px;
 }
 
+.hide {
+  display: none;
+}
+
 .add-row-btn {
   height: 32px;
   position: relative;
@@ -148,14 +152,14 @@ body {
   cursor: pointer;
 }
 
-.delete-btn-cont {
+.btn-cont {
   width: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.delete-btn-cont button {
+.btn-cont button {
   border: none;
   width: 100%;
   font-size: 20px;

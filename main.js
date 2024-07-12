@@ -1,7 +1,10 @@
+import { getTipificacions } from "./lib/services.js";
+
 const params = new URLSearchParams(window.location.search);
 const botId = params.get("botId");
 const chatId = params.get("chatId");
 const sessionId = params.get("sessionId");
+const count = params.get("count");
 
 const userData = document.getElementById("user-data");
 const autSection = document.getElementById("authorization-data");
@@ -22,6 +25,39 @@ hideAuthBtn.addEventListener("click", () => {
 hideTipifBtn.addEventListener("click", () => {
   hideSection(tipificationSection);
 });
+
+/** Se obtienen las tipificaciones desde el servicio */
+async function fetchTipifications() {
+  const rawArray = await getTipificacions();
+
+  if (rawArray.status !== 200) {
+    alert("Error al obtener las tipificaciones");
+  } else {
+    const data = rawArray.message;
+
+    const groupedData = {};
+
+    data.forEach((item) => {
+      if (!groupedData[item.reason]) groupedData[item.reason] = {};
+
+      if (!groupedData[item.reason][item.tag_lvl1])
+        groupedData[item.reason][item.tag_lvl1] = {};
+
+      if (!groupedData[item.reason][item.tag_lvl1][item.tag_lvl2])
+        groupedData[item.reason][item.tag_lvl1][item.tag_lvl2] = [];
+
+      groupedData[item.reason][item.tag_lvl1][item.tag_lvl2].push(
+        item.tag_lvl3
+      );
+    });
+    return groupedData;
+  }
+}
+
+// (async () => {
+//   const res = await fetchTipifications();
+//   console.log(res);
+// })();
 
 let dataArray = [
   {
@@ -911,450 +947,118 @@ const addRowBtn = document.getElementById("add-row-btn");
 const commentsInfo = document.getElementById("observations");
 
 // Selectores motivos
-const motivosSelect1 = document.getElementById("reason-1");
+const motivosSelectors = document.getElementsByName("reason");
+const motSelectors = Array.from(motivosSelectors);
+const level1Select = document.getElementsByName("level-1");
+const lvlOneSel = Array.from(level1Select);
+const level2Select = document.getElementsByName("level-2");
+const lvlTwoSel = Array.from(level2Select);
+const level3Select = document.getElementsByName("level-3");
+const lvlThreeSel = Array.from(level3Select);
 
-// const motivosSelect3 = document.getElementById("reason-3");
-// const motivosSelect4 = document.getElementById("reason-4");
-// const motivosSelect5 = document.getElementById("reason-5");
-
-//Nivel 1
-const levelOneSelect1 = document.getElementById("reason-1-level-1");
-// const levelOneSelect2 = document.getElementById("reason-2-level-1");
-// const levelOneSelect3 = document.getElementById("reason-3-level-1");
-// const levelOneSelect4 = document.getElementById("reason-4-level-1");
-// const levelOneSelect5 = document.getElementById("reason-5-level-1");
-
-// Nivel 2
-const levelTwoSelect1 = document.getElementById("reason-1-level-2");
-// const levelTwoSelect2 = document.getElementById("reason-2-level-2");
-// const levelTwoSelect3 = document.getElementById("reason-3-level-2");
-// const levelTwoSelect4 = document.getElementById("reason-4-level-2");
-// const levelTwoSelect5 = document.getElementById("reason-5-level-2");
-
-// Nivel 3
-const levelThreeSelect1 = document.getElementById("reason-1-level-3");
-// const levelThreeSelect2 = document.getElementById("reason-2-level-3");
-// const levelThreeSelect3 = document.getElementById("reason-3-level-3");
-// const levelThreeSelect4 = document.getElementById("reason-4-level-3");
-// const levelThreeSelect5 = document.getElementById("reason-5-level-3");
-
-let finalData = [];
-let tipificationObject = {};
-
-function generateClass(string, number) {
-  if (!number) {
-    return string;
-  }
-
-  return `${string}-${number}`;
-}
-
-// Listener para agregar una fila al formulario
-let allowAddRow = true;
-let currentRow = 1;
-addRowBtn.addEventListener("click", () => {
-  if (allowAddRow) {
-    let class1 = `tip-form-${currentRow}`;
-    let motivoClass = `reason-${currentRow}`;
-    addMoreRows(class1, motivoClass, "level-1", "level-2", "level-3");
-
-    const motivosSelect = document.getElementById(motivoClass);
-    if (motivosSelect) {
-      fillReasons(dataArray, motivosSelect);
-      motivosSelect.addEventListener("change", (e) => {
-        const levelOneSelect = document.getElementById(
-          `${motivoClass}-level-1`
-        );
-        console.log("Motivos select", motivosSelect);
-        const value = motivosSelect.value;
-        const lvl1Array = dataArray.find(
-          (element) =>
-            element.motivo.toLowerCase().replaceAll(" ", "-") === value
-        );
-        const lvl1 = lvl1Array.nivel1;
-        fillLevel(lvl1, levelOneSelect);
-        levelOneSelect.addEventListener("change", (e) => {
-          const levelTwoSelect = document.getElementById(
-            `${motivoClass}-level-2`
-          );
-          const value1 = levelOneSelect.value;
-          const lvl2Array = lvl1Array.nivel1.find(
-            (element) =>
-              element.texto.toLowerCase().replaceAll(" ", "-") === value1
-          );
-          const lvl2 = lvl2Array.nivel2;
-          fillLevel(lvl2, levelTwoSelect);
-          levelTwoSelect.addEventListener("change", (e) => {
-            const levelThreeSelect = document.getElementById(
-              `${motivoClass}-level-3`
-            );
-            const value2 = levelTwoSelect.value;
-            const lvl3Array = lvl2Array.nivel2.find(
-              (element) =>
-                element.texto.toLowerCase().replaceAll(" ", "-") === value2
-            );
-            const lvl3 = lvl3Array.nivel3;
-            fillLevel(lvl3, levelThreeSelect);
-            levelThreeSelect.addEventListener("change", (e) => {
-              const value3 = levelThreeSelect.value;
-              const lvl3Array = lvl3Array.nivel3.find(
-                (element) =>
-                  element.texto.toLowerCase().replaceAll(" ", "-") === value3
-              );
-              const lvl3 = lvl3Array.nivel3;
-              console.log(lvl3);
-            });
-          });
-        });
-      });
-    }
-
-    currentRow++;
-
-    // Deshabilitar la adición de filas temporalmente
-    allowAddRow = false;
-
-    // Habilitar la adición de filas después de un breve retraso
-    setTimeout(() => {
-      allowAddRow = true;
-    }, 100);
-  }
-});
-
-document.addEventListener("click", (e) => {
-  const deleteBtn = e.target.closest(".delete-btn");
-  if (deleteBtn) {
-    const rowToDelete = deleteBtn.parentElement;
-    if (rowToDelete && rowToDelete.classList.contains("tip-form")) {
-      rowToDelete.remove();
-      currentRow--;
-    }
-  }
-});
-
-// Función para agregar más filas a las tipificaciones
-function addMoreRows(mainDivClass, reason, level1, level2, level3) {
-  const tipForm = document.createElement("div");
-  tipForm.classList.add("tip-form");
-  tipForm.classList.add(mainDivClass);
-  const newRow = `
-    <label for="${reason}">
-      Motivo:
-      <select name="${reason}" id="${reason}" required></select>
-    </label>
-
-    <label for="${reason}-${level1}">
-      Nivel 1
-      <select
-        name="${reason}-${level1}"
-        id="${reason}-${level1}"
-        required
-      ></select>
-    </label>
-
-    <label for="${reason}-${level2}">
-      Nivel 2
-      <select
-        name="${reason}-${level2}"
-        id="${reason}-${level2}"
-        required
-      ></select>
-    </label>
-
-    <label for="${reason}-${level3}">
-      Nivel 3
-      <select name="${reason}-${level3}" id="${reason}-${level3}"></select>
-    </label>
-
-    <div class="delete-btn-cont">
-      <button id="delete-btn" name="delete-btn" class="delete-btn">-</button>
-    </div>
-  `;
-  tipForm.innerHTML = newRow;
-  tipificationContainer.appendChild(tipForm);
-}
-
-// Función para crear el objeto con los datos para Cari
-function createObject(objeto, motivo, level1, level2, level3, comments) {
-  Object.assign(objeto, {
-    motivo: motivo,
-    nivel1: level1,
-    nivel2: level2,
-    nivel3: level3,
-    observaciones: comments,
+window.onload = async function () {
+  // Llenamos los select de motivos con data desde el principio
+  motSelectors.forEach((field) => {
+    fillReasons(dataArray, field);
   });
-}
+};
 
-function handleChange(select, array, key) {
-  const value = select.value;
-  const selected = array.find((element) => element[key] === value);
-  return selected;
-}
+motSelectors.forEach((field) => {
+  field.addEventListener("change", (e) => {
+    let selectedValue = e.target.value;
+    console.log("Seleccionado", selectedValue);
+    let fieldId = field.id;
+    let level1Field = document.querySelector(`#${fieldId}-level-1`);
 
-/*motivosSelect1.addEventListener("change", () => {
-  const selectedMotivo = handleChange(motivosSelect1, dataArray, "motivo");
-  if (selectedMotivo) {
-    fillLevel(selectedMotivo.nivel1, levelOneSelect1);
-    levelOneSelect1.addEventListener("change", () => {
-      const lvl1Array = handleChange(
-        levelOneSelect1,
-        selectedMotivo.nivel1,
-        "texto"
-      );
-      if (lvl1Array) {
-        fillLevel(lvl1Array.nivel2, levelTwoSelect1);
-        levelTwoSelect1.addEventListener("change", () => {
-          const lvl3Array = handleChange(
-            levelTwoSelect1,
-            lvl1Array.nivel2,
-            "texto"
-          );
-          // console.log("Hay motivo seleccionado", selectedMotivo);
+    console.log(level1Field);
 
-          // console.log("Selector nivel 3", lvl3Array);
-          if (lvl3Array && lvl3Array.nivel3.length > 0) {
-            fillLevel(lvl3Array.nivel3, levelThreeSelect1);
-            levelThreeSelect1.addEventListener("change", () => {
-              const lvl3value = handleChange(
-                levelThreeSelect1,
-                lvl3Array.nivel3,
-                "texto"
-              );
-              createObject(
-                tipificationObject,
-                selectedMotivo.motivo,
-                lvl1Array.texto,
-                lvl3Array.texto,
-                lvl3value.texto
-              );
-            });
-          } else {
-            createObject(
-              tipificationObject,
-              selectedMotivo.motivo,
-              lvl1Array.texto,
-              lvl3Array.texto,
-              ""
-            );
-          }
-        });
-      }
-    });
-  }
-});*/
-
-/*motivosSelect2.addEventListener("change", () => {
-  const value = motivosSelect2.value;
-  const selectedMotivo = dataArray.find(
-    (element) => element.motivo.toLowerCase().replaceAll(" ", "-") === value
-  );
-  if (selectedMotivo) {
-    const lvl1Array = selectedMotivo.nivel1;
-    fillLevel(lvl1Array, levelOneSelect2);
-    levelOneSelect2.addEventListener("change", () => {
-      const value1 = levelOneSelect2.value;
-      const selectedLvl1 = lvl1Array.find(
-        (element) => element.texto.toLowerCase().replaceAll(" ", "-") === value1
-      );
-      if (selectedLvl1) {
-        const lvl2Array = selectedLvl1.nivel2;
-        fillLevel(selectedLvl1.nivel2, levelTwoSelect2);
-        levelTwoSelect2.addEventListener("change", () => {
-          const value2 = levelTwoSelect2.value;
-          const selectedLvl2 = lvl2Array.find(
-            (element) =>
-              element.texto.toLowerCase().replaceAll(" ", "-") === value2
-          );
-          if (selectedLvl2) {
-            const lvl3Array = selectedLvl2.nivel3;
-            if (lvl3Array && lvl3Array.length > 0) {
-              fillLevel(lvl3Array, levelThreeSelect2);
-              levelThreeSelect2.addEventListener("change", () => {
-                const value3 = levelThreeSelect2.value;
-                const lvl3value = lvl3Array.find((element) => {
-                  return (
-                    element.texto.toLowerCase().replaceAll(" ", "-") === value3
-                  );
-                });
-                Object.assign(tipificationObject, {
-                  motivo: selectedMotivo.motivo,
-                  nivel1: selectedLvl1.texto,
-                  nivel2: selectedLvl2.texto,
-                  nivel3: lvl3value.texto,
-                });
-                // console.log("tipificationObject", tipificationObject);
-              });
-            } else {
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: "",
-              });
-              // console.log("tipificationObject", tipificationObject);
-            }
-          }
-        });
-      }
-    });
-  }
+    if (selectedValue !== "") {
+      const lvlOneArray = dataArray.filter((element) => {
+        // console.log("Element", element);
+        // console.log(
+        //   "Motivo",
+        //   element.motivo.toLowerCase().replaceAll(" ", "-"),
+        //   "selected",
+        //   selectedValue
+        // );
+        return (
+          element.motivo.toLowerCase().replaceAll(" ", "-") === selectedValue
+        );
+      });
+      console.log("Filtered", lvlOneArray);
+      fillLevel(lvlOneArray[0].nivel1, level1Field);
+    } else {
+      level1Field.innerHTML = "";
+    }
+  });
 });
 
-motivosSelect3.addEventListener("change", () => {
-  const value = motivosSelect3.value;
-  const selectedMotivo = dataArray.find(
-    (element) => element.motivo.toLowerCase().replaceAll(" ", "-") === value
-  );
-  if (selectedMotivo) {
-    const lvl1Array = selectedMotivo.nivel1;
-    fillLevel(lvl1Array, levelOneSelect3);
-    levelOneSelect3.addEventListener("change", () => {
-      const value1 = levelOneSelect3.value;
-      const selectedLvl1 = lvl1Array.find(
-        (element) => element.texto.toLowerCase().replaceAll(" ", "-") === value1
+lvlOneSel.forEach((field, index) => {
+  field.addEventListener("change", (e) => {
+    let selectedValue = e.target.value;
+    let fieldId = field.id;
+    fieldId = fieldId.replace("-level-1", "");
+    let level2Field = document.querySelector(`#${fieldId}-level-2`);
+
+    if (selectedValue !== "") {
+      console.log("Valor", selectedValue, "value2", field);
+      const lvlTwoArray = dataArray.filter((element) => {
+        // console.log("Elemento", element.nivel1[index].nivel2);
+        // console.log("Valor", selectedValue);
+        // console.log("Texto", element.nivel1[index].texto);
+        return (
+          element.nivel1[index].texto.toLowerCase().replaceAll(" ", "-") ===
+          selectedValue
+        );
+      });
+
+      console.log(
+        "Array",
+        lvlTwoArray[0].nivel1[index].nivel2,
+        "element",
+        level2Field
       );
-      if (selectedLvl1) {
-        const lvl2Array = selectedLvl1.nivel2;
-        fillLevel(lvl2Array, levelTwoSelect3);
-        levelTwoSelect3.addEventListener("change", () => {
-          const value2 = levelTwoSelect3.value;
-          const selectedLvl2 = lvl2Array.find(
-            (element) =>
-              element.texto.toLowerCase().replaceAll(" ", "-") === value2
-          );
-          if (selectedLvl2) {
-            const lvl3Array = selectedLvl2.nivel3;
-            if (lvl3Array && lvl3Array.length > 0) {
-              fillLevel(lvl3Array, levelThreeSelect3);
-              const value3 = levelThreeSelect3.value;
-              const lvl3value = lvl3Array.find(
-                (element) =>
-                  element.texto.toLowerCase().replaceAll(" ", "-") === value3
-              );
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: lvl3value.texto,
-              });
-            } else {
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: "",
-              });
-            }
-          }
-        });
-      }
-    });
-  }
+      fillLevel(lvlTwoArray[0].nivel1[index].nivel2, level2Field);
+    } else {
+      level2Field.innerHTML = "";
+    }
+  });
 });
 
-motivosSelect4.addEventListener("change", () => {
-  const value = motivosSelect4.value;
-  const selectedMotivo = dataArray.find(
-    (element) => element.motivo.toLowerCase().replaceAll(" ", "-") === value
-  );
-  if (selectedMotivo) {
-    const lvl1Array = selectedMotivo.nivel1;
-    fillLevel(lvl1Array, levelOneSelect4);
-    levelOneSelect4.addEventListener("change", () => {
-      const value1 = levelOneSelect4.value;
-      const selectedLvl1 = lvl1Array.find(
-        (element) => element.texto.toLowerCase().replaceAll(" ", "-") === value1
-      );
-      if (selectedLvl1) {
-        const lvl2Array = selectedLvl1.nivel2;
-        fillLevel(lvl2Array, levelTwoSelect4);
-        levelTwoSelect4.addEventListener("change", () => {
-          const value2 = levelTwoSelect4.value;
-          const selectedLvl2 = lvl2Array.find(
-            (element) =>
-              element.texto.toLowerCase().replaceAll(" ", "-") === value2
-          );
-          if (selectedLvl2) {
-            const lvl3Array = selectedLvl2.nivel3;
-            if (lvl3Array && lvl3Array.length > 0) {
-              fillLevel(lvl3Array, levelThreeSelect4);
-              const value3 = levelThreeSelect4.value;
-              const lvl3value = lvl3Array.find(
-                (element) =>
-                  element.texto.toLowerCase().replaceAll(" ", "-") === value3
-              );
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: lvl3value.texto,
-              });
-            } else {
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: "",
-              });
-            }
-          }
-        });
-      }
-    });
-  }
-});
+lvlTwoSel.forEach((field, index) => {
+  field.addEventListener("change", (e) => {
+    let selectedValue = e.target.value;
+    console.log("Val", selectedValue);
+    let fieldId = field.id;
+    fieldId = fieldId.replace("-level-2", "");
+    let level3Field = document.querySelector(`#${fieldId}-level-3`);
+    console.log("level3 field", level3Field);
 
-motivosSelect5.addEventListener("change", () => {
-  const value = motivosSelect5.value;
-  const selectedMotivo = dataArray.find(
-    (element) => element.motivo.toLowerCase().replaceAll(" ", "-") === value
-  );
-  if (selectedMotivo) {
-    const lvl1Array = selectedMotivo.nivel1;
-    fillLevel(lvl1Array, levelOneSelect5);
-    levelOneSelect5.addEventListener("change", () => {
-      const value1 = levelOneSelect5.value;
-      const selectedLvl1 = lvl1Array.find(
-        (element) => element.texto.toLowerCase().replaceAll(" ", "-") === value1
-      );
-      if (selectedLvl1) {
-        const lvl2Array = selectedLvl1.nivel2;
-        fillLevel(lvl2Array, levelTwoSelect5);
-        levelTwoSelect5.addEventListener("change", () => {
-          const value2 = levelTwoSelect5.value;
-          const selectedLvl2 = lvl2Array.find(
-            (element) =>
-              element.texto.toLowerCase().replaceAll(" ", "-") === value2
-          );
-          if (selectedLvl2) {
-            const lvl3Array = selectedLvl2.nivel3;
-            if (lvl3Array && lvl3Array.length > 0) {
-              fillLevel(lvl3Array, levelThreeSelect5);
-              const value3 = levelThreeSelect5.value;
-              const lvl3value = lvl3Array.find(
-                (element) =>
-                  element.texto.toLowerCase().replaceAll(" ", "-") === value3
-              );
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: lvl3value.texto,
-              });
-            } else {
-              Object.assign(tipificationObject, {
-                motivo: selectedMotivo.motivo,
-                nivel1: selectedLvl1.texto,
-                nivel2: selectedLvl2.texto,
-                nivel3: "",
-              });
-            }
-          }
-        });
+    if (selectedValue !== "") {
+      const lvlThreeArray = dataArray.filter((element) => {
+        return (
+          element.nivel1[index].nivel2[index].texto
+            .toLowerCase()
+            .replaceAll(" ", "-") === selectedValue
+        );
+      });
+
+      if (lvlThreeArray.length === 0) {
+        level3Field.setAttribute("disabled", true);
       }
-    });
-  }
-});*/
+      // console.log(
+      //   "Array",
+      //   lvlThreeArray[0].nivel1[index].nivel2[index].nivel3,
+      //   "element",
+      //   level3Field
+      // );
+      fillLevel(
+        lvlThreeArray[0].nivel1[index].nivel2[index].nivel3,
+        level3Field
+      );
+    }
+  });
+});
 
 // Se agrega el event listener para el formulario, enviar el objeto con la data para Cari
 tipificationForm.addEventListener("submit", (e) => {
@@ -1363,13 +1067,6 @@ tipificationForm.addEventListener("submit", (e) => {
   let comments = commentsInfo.value;
   console.log("El asesor envía comentarios", comments);
 });
-
-// LLenamos los select de motivos con data desde el principio
-fillReasons(dataArray, motivosSelect1);
-
-// fillReasons(dataArray, motivosSelect3);
-// fillReasons(dataArray, motivosSelect4);
-// fillReasons(dataArray, motivosSelect5);
 
 // Función para llenar los motivos en el select
 function fillReasons(data, select) {
@@ -1380,7 +1077,20 @@ function fillReasons(data, select) {
   emptyOption.setAttribute("value", "");
   select.appendChild(emptyOption);
 
+  /*if (typeof data === "object") {
+    console.log("Data en object entries", data);
+    Object.entries(data).forEach(([key, value]) => {
+      console.log("Element en fill reasons", key);
+      let option = document.createElement("option");
+      option.setAttribute("value", key.replaceAll(" ", "-").toLowerCase());
+      option.textContent = key;
+      select.appendChild(option);
+    });
+  } else {
+    
+  }*/
   data.forEach((element) => {
+    // console.log("Element en fill reasons", element);
     let option = document.createElement("option");
     option.setAttribute(
       "value",
@@ -1393,10 +1103,14 @@ function fillReasons(data, select) {
 
 // Función para llenar el nivel 1 en el select
 function fillLevel(data, levelSelector) {
+  // console.log("Data en selector", data);
   levelSelector.innerHTML = "";
   // Agregar la opción vacía
   let emptyOption = document.createElement("option");
   emptyOption.setAttribute("value", "");
+  emptyOption.setAttribute("selected", true);
+  emptyOption.setAttribute("disabled", true);
+  emptyOption.textContent = "Seleccione una opción";
   levelSelector.appendChild(emptyOption);
 
   console.log("Valor selector en fillLevel", levelSelector.value);
@@ -1405,6 +1119,7 @@ function fillLevel(data, levelSelector) {
   // }
 
   data.forEach((element) => {
+    console.log("Elemento", element);
     let option = document.createElement("option");
     let valueNormalization = element.texto.toLowerCase().replaceAll(" ", "-");
     option.setAttribute("value", valueNormalization);

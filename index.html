@@ -6,9 +6,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <main class="container">
+    <main class="w-full">
       <header class="wv-header">
         <figure class="header-img-cont">
           <img
@@ -32,7 +33,11 @@
           <form class="user-form" id="user-form">
             <div class="id-type-cont">
               <label for="id-type">Seleccione el tipo de documento</label>
-              <select name="id-type" id="id-type"></select>
+              <select
+                name="id-type"
+                id="id-type"
+                class="border border-2 border-blue-900"
+              ></select>
 
               <label for="id-number">
                 Ingrese el número de documento
@@ -42,19 +47,27 @@
                   pattern="[a-zA-Z0-9]+"
                   id="doc-num"
                   name="doc-num"
+                  class="border border-2 border-blue-900"
                   required
                 />
               </label>
-              <button type="submit">Buscar usuario - Nueva atención</button>
             </div>
-            <button
-              type="button"
-              id="reset-form"
-              name="reset-form"
-              class="reset-form"
-            >
-              Limpiar formulario
-            </button>
+            <div class="flex gap-4 m-auto justify-space-around items-center">
+              <button
+                type="submit"
+                class="bg-blue-900 py-2 px-4 text-white m-auto rounded-full font-bold"
+              >
+                Buscar usuario - Nueva atención
+              </button>
+              <button
+                type="button"
+                id="reset-form"
+                name="reset-form"
+                class="bg- bg-emerald-600 py-2 px-4 text-white m-auto rounded-full font-bold"
+              >
+                Limpiar formulario
+              </button>
+            </div>
           </form>
         </div>
         <div class="data-result hide" id="data-result"></div>
@@ -83,17 +96,23 @@
           <!-- Contenedor selectores tipificación -->
           <div class="tipification-cont" id="tipification-cont">
             <!-- Tipificación 1 -->
-            <div class="tip-form tip-form-1">
+            <div class="tip-form tip-form-1 px-10">
               <label for="reason-1">
                 Motivo:
-                <select name="reason-1" id="reason-1" required></select>
+                <select
+                  name="reason"
+                  id="reason-1"
+                  class="border border-2 border-blue-900 ml-2"
+                  required
+                ></select>
               </label>
 
-              <label for="reason-1-level-1">
+              <label for="reason-1-level-1" class="mx-4">
                 Nivel 1
                 <select
-                  name="reason-1-level-1"
+                  name="level-1"
                   id="reason-1-level-1"
+                  class="border border-2 border-blue-900 min-w-60 ml-2"
                   required
                 ></select>
               </label>
@@ -101,27 +120,303 @@
               <label for="reason-1-level-2">
                 Nivel 2
                 <select
-                  name="reason-1-level-2"
+                  name="level-2"
                   id="reason-1-level-2"
+                  class="border border-2 border-blue-900 min-w-60 ml-2"
                   required
                 ></select>
               </label>
 
               <label for="reason-1-level3">
                 Nivel 3
-                <select name="reason-1-level3" id="reason-1-level-3"></select>
+                <select name="level3" id="reason-1-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tpificación 2 -->
+            <div class="tip-form tip-form2 hide">
+              <label for="reason-2">
+                Motivo:
+                <select name="reason" id="reason-2"></select>
+              </label>
+
+              <label for="reason-2-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-2-level-1"></select>
+              </label>
+
+              <label for="reason-2-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-2-level-2"></select>
+              </label>
+
+              <label for="reason-2-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-2-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificaión 3 -->
+            <div class="tip-form tip-form3 hide">
+              <label for="reason-3">
+                Motivo:
+                <select name="reason" id="reason-3"></select>
+              </label>
+
+              <label for="reason-3-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-3-level-1"></select>
+              </label>
+
+              <label for="reason-3-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-3-level-2"></select>
+              </label>
+
+              <label for="reason-3-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-3-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificación 4 -->
+            <div class="tip-form tip-form4 hide">
+              <label for="reason-4">
+                Motivo:
+                <select name="reason" id="reason-4"></select>
+              </label>
+
+              <label for="reason-4-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-4-level-1"></select>
+              </label>
+
+              <label for="reason-4-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-4-level-2"></select>
+              </label>
+
+              <label for="reason-4-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-4-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificación 5 -->
+            <div class="tip-form tip-form5 hide">
+              <label for="reason-5">
+                Motivo:
+                <select name="reason" id="reason-5"></select>
+              </label>
+
+              <label for="reason-5-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-5-level-1"></select>
+              </label>
+
+              <label for="reason-5-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-5-level-2"></select>
+              </label>
+
+              <label for="reason-5-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-5-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificación 6 -->
+            <div class="tip-form tip-form6 hide">
+              <label for="reason-6">
+                Motivo:
+                <select name="reason" id="reason-6"></select>
+              </label>
+
+              <label for="reason-6-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-6-level-1"></select>
+              </label>
+
+              <label for="reason-6-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-6-level-2"></select>
+              </label>
+
+              <label for="reason-6-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-6-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tpificación 7 -->
+            <div class="tip-form tip-form7 hide">
+              <label for="reason-7">
+                Motivo:
+                <select name="reason" id="reason-7"></select>
+              </label>
+
+              <label for="reason-7-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-7-level-1"></select>
+              </label>
+
+              <label for="reason-7-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-7-level-2"></select>
+              </label>
+
+              <label for="reason-7-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-7-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificación 8 -->
+            <div class="tip-form tip-form8 hide">
+              <label for="reason-8">
+                Motivo:
+                <select name="reason" id="reason-8"></select>
+              </label>
+
+              <label for="reason-8-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-8-level-1"></select>
+              </label>
+
+              <label for="reason-8-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-8-level-2"></select>
+              </label>
+
+              <label for="reason-8-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-8-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificación 9 -->
+            <div class="tip-form tip-form9 hide">
+              <label for="reason-9">
+                Motivo:
+                <select name="reason" id="reason-9" required></select>
+              </label>
+
+              <label for="reason-9-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-9-level-1" required></select>
+              </label>
+
+              <label for="reason-9-level-2">
+                Nivel 2
+                <select
+                  name="reason-9-level-2"
+                  id="reason-9-level-2"
+                  required
+                ></select>
+              </label>
+
+              <label for="reason-9-level-3">
+                Nivel 3
+                <select name="reason-9-level-3" id="reason-9-level-3"></select>
               </label>
 
               <div class="delete-btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
+                <button id="delete-btn" name="delete-btn" class="delete-btn">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <!-- Tipificación 10 -->
+            <div class="tip-form tip-form10" hidden>
+              <label for="reason-10">
+                Motivo:
+                <select name="reason" id="reason-10" required></select>
+              </label>
+
+              <label for="reason-10-level-1">
+                Nivel 1
+                <select name="level-1" id="reason-10-level-1" required></select>
+              </label>
+
+              <label for="reason-10-level-2">
+                Nivel 2
+                <select name="level-2" id="reason-10-level-2" required></select>
+              </label>
+
+              <label for="reason-10-level-3">
+                Nivel 3
+                <select name="level-3" id="reason-10-level-3"></select>
+              </label>
+
+              <div class="btn-cont">
+                <button id="add-btn" name="add-btn" class="add-btn">+</button>
                 <button id="delete-btn" name="delete-btn" class="delete-btn">
                   -
                 </button>
               </div>
             </div>
           </div>
-          <div class="add-row-btn" id="add-row-btn">
+          <!-- <div class="add-row-btn" id="add-row-btn">
             <img src="./assets/add-circle.svg" alt="Agregar fila" />
-          </div>
+          </div> -->
 
           <div
             class="observations-cont"
